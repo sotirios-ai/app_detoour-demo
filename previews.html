@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Detoour · Six little windows into your trip</title>
+    <link rel="icon" href="./favicon.svg" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;650;750;800&display=swap");
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #eaece5;
+        font-family: Manrope, sans-serif;
+        color: #242a28;
+      }
+      header {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 48px 30px 30px;
+      }
+      header > a {
+        display: inline-flex;
+        gap: 9px;
+        align-items: center;
+        color: #245c56;
+        font-size: 29px;
+        font-weight: 800;
+        text-decoration: none;
+        letter-spacing: -1px;
+      }
+      header img {
+        width: 36px;
+        height: 36px;
+      }
+      h1 {
+        font-size: 36px;
+        letter-spacing: -1.4px;
+        margin: 27px 0 12px;
+      }
+      p {
+        color: #626b67;
+        font-size: 14px;
+        line-height: 1.7;
+        max-width: 700px;
+      }
+      .links {
+        display: flex;
+        gap: 20px;
+        margin-top: 20px;
+        font-size: 12px;
+      }
+      .links a {
+        color: #245c56;
+      }
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(390px, 1fr));
+        gap: 42px 35px;
+        max-width: 1360px;
+        margin: auto;
+        padding: 10px 30px 60px;
+      }
+      .screen {
+        width: 390px;
+        justify-self: center;
+      }
+      h2 {
+        font-size: 16px;
+        letter-spacing: -0.3px;
+        margin: 0 0 7px;
+      }
+      h2 span {
+        color: #80958a;
+        font-size: 11px;
+        margin-right: 12px;
+      }
+      section p {
+        font-size: 11px;
+        margin: 0 0 15px;
+      }
+      iframe {
+        display: block;
+        width: 390px;
+        height: 844px;
+        background: #f7f6f2;
+        border: 0;
+        border-radius: 25px;
+        box-shadow: 0 10px 40px #183e2814;
+        outline: 1px solid #d5ddd1;
+      }
+      footer {
+        padding: 0 30px 40px;
+        text-align: center;
+        font-size: 11px;
+        color: #626b67;
+      }
+      .single header {
+        padding: 20px 25px 15px;
+        max-width: 440px;
+      }
+      .single header > a {
+        font-size: 22px;
+      }
+      .single header img {
+        width: 28px;
+        height: 28px;
+      }
+      .single header h1,
+      .single header > p,
+      .single header .links {
+        display: none;
+      }
+      .single .gallery {
+        display: block;
+        padding: 0 25px 30px;
+        max-width: 440px;
+      }
+      .single .screen {
+        margin: auto;
+      }
+      .single section p {
+        margin-bottom: 10px;
+      }
+      .single footer {
+        display: none;
+      }
+      @media (max-width: 440px) {
+        header {
+          padding: 28px 18px 20px;
+        }
+        h1 {
+          font-size: 29px;
+        }
+        .gallery {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px 0 35px;
+          gap: 30px;
+        }
+        .screen {
+          width: 390px;
+          max-width: 100%;
+        }
+        .screen h2,
+        .screen > p {
+          padding: 0 15px;
+        }
+        iframe {
+          border-radius: 0;
+          max-width: 100%;
+        }
+        .single .gallery {
+          padding: 0;
+        }
+        .single header {
+          padding: 20px 15px;
+        }
+        .single .screen h2,
+        .single .screen > p {
+          padding: 0 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="./#trip"><img src="./favicon.svg" alt="" />detoour.</a>
+      <h1>Six little windows into your trip.</h1>
+      <p>
+        A mobile-first preview of Detoour. Explore the actual interactive
+        screens below: a little structure, a few possibilities, and a budget
+        that follows your decisions.
+      </p>
+      <div class="links">
+        <a href="./#trip">Open the full app ↗</a
+        ><a href="./previews.html">All six screens</a>
+      </div>
+    </header>
+    <main class="gallery" id="gallery"></main>
+    <footer>
+      Interactive Paris demo · Illustrative activities, prices and estimates ·
+      Changes are saved on this device.
+    </footer>
+    <script>
+      const screens = [
+        ["trip", "Your trip", "Your essentials, with room for the unexpected."],
+        [
+          "discover",
+          "Discover",
+          "Swipe through activities that fit your free time.",
+        ],
+        [
+          "shortlist",
+          "Your shortlist",
+          "Three possibilities. Decide now or on the spot.",
+        ],
+        [
+          "activity",
+          "The little details",
+          "An editable guess at what you might spend.",
+        ],
+        [
+          "budget",
+          "Your active budget",
+          "See how every decision changes the picture.",
+        ],
+        [
+          "setup",
+          "Make it yours",
+          "Your interests, your pace, your kind of trip.",
+        ],
+      ];
+      const selected = new URLSearchParams(location.search).get("screen");
+      const active = selected
+        ? screens.filter((s) => s[0] === selected)
+        : screens;
+      if (selected && active.length) document.body.classList.add("single");
+      const gallery = document.getElementById("gallery");
+      for (const [id, title, description] of active.length ? active : screens) {
+        const section = document.createElement("section");
+        section.className = "screen";
+        section.innerHTML =
+          "<h2><span>0" +
+          (screens.findIndex((s) => s[0] === id) + 1) +
+          "</span>" +
+          title +
+          "</h2><p>" +
+          description +
+          "</p>";
+        const frame = document.createElement("iframe");
+        frame.src = "./#" + id;
+        frame.title = "Detoour — " + title;
+        frame.id = "screen-" + id;
+        frame.loading = selected ? "eager" : "lazy";
+        section.append(frame);
+        gallery.append(section);
+      }
+    </script>
+  </body>
+</html>
