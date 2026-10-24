@@ -164,6 +164,12 @@
           padding: 0 15px;
         }
       }
+    /* Single-frame capture fits inside a 900px browser viewport. */
+      .single header { display: none; }
+      .single .gallery { padding: 10px 25px 0; }
+      .single .screen > p { display: none; }
+      .single .screen h2 { font-size: 14px; line-height: 20px; height: 20px; margin: 0 0 8px; padding: 0; }
+      @media (max-width: 440px) { .single .gallery { padding: 10px 0 0; } .single .screen h2 { padding: 0 15px; } }
     </style>
   </head>
   <body>
